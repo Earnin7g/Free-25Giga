@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رصيد 25 جيجا مجانابمناسبة شهر رمضان</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .container {
+            background: white;
+            width: 100vw;
+            height: 100vh;
+            padding: 15px;
+        }
+
+        .post img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .text {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .highlight {
+            color: green;
+            font-weight: bold;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            background: #00008B;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .button:hover {
+            background: #00007B;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            color: gray;
+            border-bottom: 1px solid #ddd;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .actions div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: gray;
+        }
+
+        .like.active {
+            color: #1877f2;
+        }
+
+        .comments {
+            margin-top: 10px;
+        }
+
+        .comment {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+        }
+
+        .comment img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .comment-box {
+            background: #f0f2f5;
+            padding: 8px;
+            border-radius: 12px;
+            max-width: 80%;
+            font-size: 13px;
+            color: #333; /* تم إصلاح لون النص هنا */
+        }
+
+        .comment-footer {
+            display: flex;
+            gap: 15px;
+            color: gray;
+            font-size: 10px;
+            margin-top: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .comment-footer span:hover {
+            text-decoration: underline;
+            color: #1877f2;
+        }
+
+        .reply {
+            margin-left: 50px;
+        }
+
+        .add-comment {
+            display: flex;
+            margin-top: 10px;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .add-comment input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background: #f0f2f5;
+            font-size: 13px;
+        }
+
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading-circle {
+            border: 4px solid #00008B;
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .phone-input {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%; /* تم تعديل العرض ليكون بعرض الشاشة */
+        }
+
+        .phone-input input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .phone-input button {
+            background: #00008B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .phone-input button:hover {
+            background: #00007B;
+        }
+
+        .verification {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%; /* تم تعديل العرض ليكون بعرض الشاشة */
+        }
+
+        .verification-text {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 80%;
+            height: 20px;
+            border: 2px solid #00008B;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: green;
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .progress-bar-percent {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00008B;
+            font-size: 12px;
+        }
+
+        .instructions {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            background: #f0f2f5;
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%; /* تم تعديل العرض ليكون بعرض الشاشة */
+            max-width: 100%; /* تم تعديل العرض ليكون بعرض الشاشة */
+        }
+
+        .instructions-text {
+            font-size: 16px;
+            color: green;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .instructions-box {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .instructions-box ol {
+            padding-left: 20px;
+        }
+
+        .instructions-box li {
+            margin-bottom: 10px;
+        }
+
+        .invite-button {
+            background: #00008B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .invite-button:hover {
+            background: #00007B;
+        }
+
+        .follow-button {
+            background: #00008B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .follow-button:hover {
+            background: #00007B;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100vw;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="post">
+        <img src="https://www2.0zz0.com/2025/03/04/11/309593212.jpg" alt="عرض رمضان">
+        <div class="text">
+            بمناسبة حلول شهر رمضان المبارك، قررت شركات الاتصالات المصرية تقديم رصيد إنترنت مجاني بقيمة 
+            <span class="highlight">25 جيجا</span>.
+        </div>
+        <a href="#" class="button" id="getOffer">الحصول على الرصيد</a>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="loading-circle"></div>
+        <div class="loading-text">برجاء الانتظار...</div>
+    </div>
+
+    <div class="phone-input" id="phoneInput">
+        <input type="text" placeholder="قم بإدخال رقم هاتفك" id="phoneNumber">
+        <button onclick="verifyPhone()">إرسال</button>
+    </div>
+
+    <div class="verification" id="verification">
+        <div class="verification-text">جاري التحقق...</div>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+            <div class="progress-bar-percent" id="progressBarPercent">0%</div>
+        </div>
+    </div>
+
+    <div class="instructions" id="instructions">
+        <div class="instructions-text">
+            بعد التحقق من رقم هاتفك، تبين انك لم تستفد بعد من الرصيد.<br>
+            ستتوصل بالرصيد على هذا الرقم: <span id="verifiedPhone" class="highlight"></span>، مباشرة بعد اتباع التعليمات ادناه:
+        </div>
+        <div class="instructions-box">
+            <ol>
+                <li>إضغط على زر "دعوة" الموجود فى الأسفل وارسل الرسالة الى 15 صديقا او 5 مجموعات على واتساب، ليستطيعو بدورهم الاستفادة من الرصيد المجاني.</li>
+                <li>ستتوصل بالرصيد تلقائيا بعد امتلاء شريط التحقق الاخضر.</li>
+            </ol>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="inviteProgressBarFill"></div>
+            <div class="progress-bar-percent" id="inviteProgressBarPercent">0%</div>
+        </div>
+        <button class="invite-button" id="inviteButton" onclick="sendWhatsAppMessage()">دعوة</button>
+        <button class="follow-button" id="followButton" onclick="followLink()">متابعة</button>
+    </div>
+
+    <div class="stats">
+        <div>38.9K</div>
+        <div>12.3K Comments · 1.6K Shares</div>
+    </div>
+
+    <div class="actions">
+        <div class="like" onclick="toggleLike(this)">👍 Like</div>
+        <div>💬 Comment</div>
+        <div>🔄 Share</div>
+    </div>
+
+    <div class="comments">
+        <div class="comment">
+            <img src="https://randomuser.me/api/portraits/women/51.jpg" alt="User">
+            <div>
+                <div class="comment-box"><strong>Meryam Arafa:</strong> كنت مترددة في البداية بشأن هذا العرض، ولكنني تأكدت أنه حقيقي. لقد وصلت للتو 25 جيجابايت، رمضان كريم.</div>
+                <div class="comment-footer"><span>2m</span> <span>Like</span> <span>Reply</span></div>
+            </div>
+        </div>
+
+        <div class="comment">
+            <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="User">
+            <div>
+                <div class="comment-box"><strong>محمد الساهي:</strong> وصلت 25 جيجابايت، واو، غير مصدق!</div>
+                <div class="comment-footer"><span>3m</span> <span>Like</span> <span>Reply</span></div>
+            </div>
+        </div>
+
+        <div class="comment reply">
+            <img src="https://randomuser.me/api/portraits/women/53.jpg" alt="User">
+            <div>
+                <div class="comment-box"><strong>Hiba Saber:</strong> الباقة الخاصة بي معلقة، لو سمحت تساعدني!</div>
+                <div class="comment-footer"><span>4m</span> <span>Like</span> <span>Reply</span></div>
+            </div>
+        </div>
+
+        <div class="comment">
+            <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="User">
+            <div>
+                <div class="comment-box"><strong>King Achraf:</strong> أختي توصلت بالرصيد، يا رب أتواصل بيه أنا أيضًا.</div>
+                <div class="comment-footer"><span>5m</span> <span>Like</span> <span>Reply</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="add-comment">
+        <input type="text" placeholder="Write a comment...">
+    </div>
+</div>
+
+<script>
+    let currentProgress = 0;
+    const progressStops = [50, 85, 96, 100];
+
+    function toggleLike(element) {
+        element.classList.toggle("active");
+    }
+
+    document.getElementById('getOffer').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.querySelector('.post').style.display = 'none';
+        document.getElementById('loading').style.display = 'flex';
+
+        setTimeout(function() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('phoneInput').style.display = 'flex';
+        }, 2000);
+    });
+
+    function verifyPhone() {
+        var phoneNumber = document.getElementById('phoneNumber').value;
+        if (phoneNumber) {
+            document.getElementById('phoneInput').style.display = 'none';
+            document.getElementById('verification').style.display = 'flex';
+
+            var progress = 0;
+            var interval = setInterval(function() {
+                progress += 20;
+                document.getElementById('progressBarFill').style.width = progress + '%';
+                document.getElementById('progressBarPercent').innerText = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('verification').style.display = 'none';
+                    document.getElementById('instructions').style.display = 'flex';
+                    document.getElementById('verifiedPhone').innerText = phoneNumber;
+                }
+            }, 1000);
+        }
+    }
+
+    function sendWhatsAppMessage() {
+        if (currentProgress >= progressStops.length) return;
+
+        // تحديث شريط التقدم
+        const progress = progressStops[currentProgress];
+        document.getElementById('inviteProgressBarFill').style.width = progress + '%';
+        document.getElementById('inviteProgressBarPercent').innerText = progress + '%';
+        
+        currentProgress++;
+
+        // إظهار زر المتابعة عند اكتمال التحميل
+        if (currentProgress === progressStops.length) {
+            document.getElementById('inviteButton').style.display = 'none';
+            document.getElementById('followButton').style.display = 'block';
+        }
+
+        // إرسال الرسالة عبر واتساب
+        const message = "25 جيجا مجانا\nhttps://earnif3y.blogspot.com";
+        const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
+        window.open(url, '_blank');
+    }
+
+    function followLink() {
+        window.location.href = "https://singingfiles.com/show.php?l=0&u=2295508&id=48946";
+    }
+</script>
+
+</body>
+</html>
