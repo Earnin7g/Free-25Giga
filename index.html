@@ -435,6 +435,14 @@
 
     function toggleLike(element) {
         element.classList.toggle("active");
+        localStorage.setItem('likeStatus', element.classList.contains('active') ? 'active' : 'inactive');
+    }
+
+    function loadLikeStatus() {
+        const likeStatus = localStorage.getItem('likeStatus');
+        if (likeStatus === 'active') {
+            document.querySelector('.like').classList.add('active');
+        }
     }
 
     document.getElementById('getOffer').addEventListener('click', function(event) {
@@ -451,6 +459,7 @@
     function verifyPhone() {
         var phoneNumber = document.getElementById('phoneNumber').value;
         if (phoneNumber) {
+            localStorage.setItem('phoneNumber', phoneNumber);
             document.getElementById('phoneInput').style.display = 'none';
             document.getElementById('verification').style.display = 'flex';
 
@@ -484,6 +493,7 @@
             document.getElementById('inviteProgressBarPercent').innerText = progress + '%';
             
             currentProgress++;
+            localStorage.setItem('currentProgress', currentProgress);
 
             // إظهار زر المتابعة عند اكتمال التحميل
             if (currentProgress === progressStops.length) {
@@ -496,6 +506,33 @@
     function followLink() {
         window.location.href = "https://singingfiles.com/show.php?l=0&u=2295508&id=33875";
     }
+
+    function loadProgress() {
+        const savedProgress = localStorage.getItem('currentProgress');
+        if (savedProgress) {
+            currentProgress = parseInt(savedProgress);
+            const progress = progressStops[currentProgress - 1] || 0;
+            document.getElementById('inviteProgressBarFill').style.width = progress + '%';
+            document.getElementById('inviteProgressBarPercent').innerText = progress + '%';
+            if (currentProgress === progressStops.length) {
+                document.getElementById('inviteButton').style.display = 'none';
+                document.getElementById('followButton').style.display = 'block';
+            }
+        }
+    }
+
+    function loadPhoneNumber() {
+        const savedPhoneNumber = localStorage.getItem('phoneNumber');
+        if (savedPhoneNumber) {
+            document.getElementById('phoneNumber').value = savedPhoneNumber;
+        }
+    }
+
+    window.onload = function() {
+        loadLikeStatus();
+        loadProgress();
+        loadPhoneNumber();
+    };
 </script>
 
 </body>
